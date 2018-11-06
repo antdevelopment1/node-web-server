@@ -1,22 +1,26 @@
 const express = require('express');
+const hbs = require('hbs');
 
 let app = express();
+
+app.set('view engine', 'hbs');
 
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', (request, response) => {
     // response.send('<h1>Hello Express!</h1>');
-    response.send({
-        name: 'April',
-        likes: [
-            'ponies',
-            'ice cream'
-        ]
-    });
+    response.render('home.hbs', {
+        welcomeMessage: 'Welcome to this page',
+        pageTitle: 'Home page',
+       currentYear: new Date().getFullYear()
+    })
 });
 
 app.get('/about', (request, response) => {
-    response.send('About Page');
+   response.render('about.hbs', {
+       pageTitle: 'About page',
+       currentYear: new Date().getFullYear()
+   });
 })
 
 // /bad send back json with an error message property
